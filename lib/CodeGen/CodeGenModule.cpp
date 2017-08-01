@@ -1070,6 +1070,12 @@ void CodeGenModule::CreateFunctionTypeMetadata(const FunctionDecl *FD,
   llvm::Metadata *MD = CreateMetadataIdentifierForType(FD->getType());
   F->addTypeMetadata(0, MD);
 
+  llvm::outs() << "<cfi>{ \"name\": \""
+               << F->getName()
+               << "\", \"typeId\":\""
+               << FD->getType().getAsString()
+               << "\"}</cfi>\n";
+
   // Emit a hash-based bit set entry for cross-DSO calls.
   if (CodeGenOpts.SanitizeCfiCrossDso)
     if (auto CrossDsoTypeId = CreateCrossDsoCfiTypeId(MD))
